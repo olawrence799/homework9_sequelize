@@ -43,18 +43,32 @@ def tobs():
 start_date = '2017-01-01'
 end_date = '2017-01-14'
 
-@app.route("/api/v1.0/start")
-def start():
+#@app.route("/api/v1.0/start")
+#def start():
+#    results_start = session.query(func.min(Measurement.tobs),\
+#    func.avg(Measurement.tobs),func.max(Measurement.tobs)).\
+#    filter(Measurement.date >= (start_date)).all()
+#    return jsonify(results_start)
+
+#@app.route("/api/v1.0/startend")
+#def end():
+#    results_start_end = session.query(func.min(Measurement.tobs),\
+#    func.avg(Measurement.tobs),func.max(Measurement.tobs)).\
+#    filter(Measurement.date.between(start_date, end_date)).all()
+#    return jsonify(results_start_end)
+
+@app.route("/api/v1.0/<start>")
+def start(start):
     results_start = session.query(func.min(Measurement.tobs),\
     func.avg(Measurement.tobs),func.max(Measurement.tobs)).\
-    filter(Measurement.date >= (start_date)).all()
+    filter(Measurement.date >= (start)).all()
     return jsonify(results_start)
 
-@app.route("/api/v1.0/startend")
-def end():
+@app.route("/api/v1.0/<start>/<end>")
+def startend(start,end):
     results_start_end = session.query(func.min(Measurement.tobs),\
     func.avg(Measurement.tobs),func.max(Measurement.tobs)).\
-    filter(Measurement.date.between(start_date, end_date)).all()
+    filter(Measurement.date.between(start, end)).all()
     return jsonify(results_start_end)
 
 if __name__ == '__main__':
